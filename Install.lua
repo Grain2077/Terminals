@@ -1,14 +1,10 @@
 term.setPaletteColour(colours.white, 0XFBF2B7)
 term.setPaletteColour(colours.black, 0X020202)
 local options = {
-    "[View Logs]                                    ",
-    "[Vault Door Control]                           ",
-    "[Vault Door Control]                           ",
-    "[Vault Door Control]                           ",
-    "[Vault Door Control]                           ",
-    "[Vault Door Control]                           ",
-    "[Vault Door Control]                           ",
-    "[Emergency Management System]                  "
+    "[External Blastdoor Controller] v0.1           ",
+    "[Pip-Boy] v0.1                                 ",
+    "[External Vault Terminal] v0.1                 ",
+    "[Internal Vault Terminal] v0.1                 "
 }
 
 local selected = 1
@@ -20,11 +16,11 @@ local function drawMenu()
     print("  Welcome to Vault-Tec (TM) VaultNet")
     print("")
     print("  ==============Welcome to Vault-Tec=============")
-    print("  |Automatic terminal installer.                |")
+    print("  |Automatic terminal installer.             v0.1|")
     print("  ===============================================")
+    print("    (Almost every option will need configuring)")
     print("              Please select an option:")
-    print()
-    
+    print("")
     for i, option in ipairs(options) do
         if i == selected then
             -- Invert text for highlight
