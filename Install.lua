@@ -2,7 +2,7 @@ term.setPaletteColour(colours.white, 0XFBF2B7)
 term.setPaletteColour(colours.black, 0X020202)
 local options = {
     "[View Logs]                                    ",
-    "[Vault Door Control]        ",
+    "[Vault Door Control]                           ",
     "[Emergency Management System]                  "
 }
 
@@ -14,10 +14,8 @@ local function drawMenu()
     term.setCursorPos(1,2)
     print("  Welcome to Vault-Tec (TM) VaultNet")
     print("")
-    print("")
-    print("  ==============Welcome to Vault 37==============")
-    print("  |Vault Status: NORMAL                         |")
-    print("  |Vault Door: SEALED                           |")
+    print("  ==============Welcome to Vault-Tec=============")
+    print("  |Automatic terminal installer.                |")
     print("  ===============================================")
     print("              Please select an option:")
     print()
