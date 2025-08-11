@@ -16,7 +16,7 @@ local function drawMenu()
     print("  Welcome to Vault-Tec (TM) VaultNet")
     print("")
     print("  ==============Welcome to Vault-Tec=============")
-    print("  |Automatic terminal installer.             v0.1|")
+    print("  |Automatic terminal installer.            v0.1|")
     print("  ===============================================")
     print("    (Almost every option will need configuring)")
     print("              Please select an option:")
@@ -52,11 +52,13 @@ while true do
     elseif key == keys.enter then
     term.setCursorPos(3,18)
         if selected == 1 then
-        print("Accessing Logs...")
+        print("Installing ExtBlstCtrl...")
         elseif selected == 2 then
-        print("Connecting...")
+        print("Installing Pip-OS...")
         elseif selected == 3 then
-        print("Access EMS...")
+        print("Installing ExtVltTerm...")
+        elseif selected == 4 then
+        print("Installing IntVltTerm...")
         end
     elseif key == keys.q then
         break
