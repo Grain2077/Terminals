@@ -1,17 +1,17 @@
 --Allowed Computer IDs (Add an entra "or" for more, must have 2 IDs)
-function IDv(x)          --Computer Sides
- if x == 6 or x == 17 then     --Top    =Door Closed Signal
+function IDv(x)
+ if x == 6 or x == 17 then
   idcheck = true
-   if not currentClient then           --Front  =Ender Modem
+   if not currentClient then
     currentClient = id
     print("Locked to ID:", currentClient)
-   end
-   rednet.send(id,"IDTrue") --Left   -Open Door Signal
-  else                     --Right  -Close Door Signal
-  idcheck = false          --Back   =Door Open Signal
-  end                      --Bottom =Speaker
- end
-
+   end                      --Computer Sides
+   rednet.send(id,"IDTrue") --Top    =Door Closed Signal
+  else                      --Front  =Ender Modem
+  idcheck = false           --Left   -Open Door Signal
+  end                       --Right  -Close Door Signal
+ end                        --Back   =Door Open Signal
+                            --Bottom =Speaker
 --Open modem
 rednet.open("front")
 local currentClient = nil
