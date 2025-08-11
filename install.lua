@@ -53,7 +53,7 @@ while true do
     term.setCursorPos(3,18)
         if selected == 1 then
         print("Installing ExtBlstCtrl...")
-            wget https://raw.githubusercontent.com/Grain2077/Terminals/refs/heads/main/ExtBlstCtrl/startup
+            shell.run("wget https://raw.githubusercontent.com/Grain2077/Terminals/refs/heads/main/ExtBlstCtrl/startup")
         elseif selected == 2 then
         print("Installing Pip-OS...")
         elseif selected == 3 then
