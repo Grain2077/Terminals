@@ -3,6 +3,11 @@ term.setPaletteColour(colours.black, 0X020202)
 local options = {
     "[View Logs]                                    ",
     "[Vault Door Control]                           ",
+    "[Vault Door Control]                           ",
+    "[Vault Door Control]                           ",
+    "[Vault Door Control]                           ",
+    "[Vault Door Control]                           ",
+    "[Vault Door Control]                           ",
     "[Emergency Management System]                  "
 }
 
