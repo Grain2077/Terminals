@@ -2,15 +2,15 @@ term.setPaletteColour(colours.white, 0XFBF2B7)
 term.setPaletteColour(colours.black, 0X020202)
 function DelInst()
 term.setCursorPos(3,18)
-    print("Deleting Installer...")
+    write("Deleting Installer...                    ")
     sleep(0.5)
     shell.run("delete install.lua")
-    print("Rebooting")
+    write("Rebooting...                             ")
     sleep(0.5)
     shell.run("reboot")
 end
 local options = {
-    "[External Blastdoor Controller] v0.1           ",
+    "[External Blastdoor Controller] v0.2           ",
     "[Pip-Boy] v0.1                                 ",
     "[External Vault Terminal] v0.1                 ",
     "[Internal Vault Terminal] v0.1                 "
@@ -25,7 +25,7 @@ local function drawMenu()
     print("  Welcome to Vault-Tec (TM) VaultNet")
     print("")
     print("  ==============Welcome to Vault-Tec=============")
-    print("  |Automatic terminal installer.            v0.2|")
+    print("  |Automatic terminal installer.            v0.3|")
     print("  ===============================================")
     print("    (Almost every option will need configuring)")
     print("              Please select an option:")
@@ -61,15 +61,15 @@ while true do
     elseif key == keys.enter then
     term.setCursorPos(3,18)
         if selected == 1 then
-        print("Installing ExtBlstCtrl...")
+        write("Installing ExtBlstCtrl...    ")
             shell.run("wget https://raw.githubusercontent.com/Grain2077/Terminals/refs/heads/main/ExtBlstCtrl/startup")
                 DelInst()
         elseif selected == 2 then
-        print("Installing Pip-OS...")
+        write("Installing Pip-OS...        ")
         elseif selected == 3 then
-        print("Installing ExtVltTerm...")
+        write("Installing ExtVltTerm...      ")
         elseif selected == 4 then
-        print("Installing IntVltTerm...")
+        write("Installing IntVltTerm...         ")
         end
     elseif key == keys.q then
         break
