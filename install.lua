@@ -1,5 +1,13 @@
 term.setPaletteColour(colours.white, 0XFBF2B7)
 term.setPaletteColour(colours.black, 0X020202)
+function DelInst()
+term.setCursorPos(3,18)
+    print("Deleting Installer...")
+    sleep(0.5)
+    shell.run("delete install.lua")
+    print("Rebooting")
+    sleep(0.5)
+    shell.run("reboot")
 local options = {
     "[External Blastdoor Controller] v0.1           ",
     "[Pip-Boy] v0.1                                 ",
@@ -54,6 +62,7 @@ while true do
         if selected == 1 then
         print("Installing ExtBlstCtrl...")
             shell.run("wget https://raw.githubusercontent.com/Grain2077/Terminals/refs/heads/main/ExtBlstCtrl/startup")
+                DelInst()
         elseif selected == 2 then
         print("Installing Pip-OS...")
         elseif selected == 3 then
