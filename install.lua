@@ -8,6 +8,7 @@ term.setCursorPos(3,18)
     print("Rebooting")
     sleep(0.5)
     shell.run("reboot")
+end
 local options = {
     "[External Blastdoor Controller] v0.1           ",
     "[Pip-Boy] v0.1                                 ",
@@ -24,7 +25,7 @@ local function drawMenu()
     print("  Welcome to Vault-Tec (TM) VaultNet")
     print("")
     print("  ==============Welcome to Vault-Tec=============")
-    print("  |Automatic terminal installer.           v0.1a|")
+    print("  |Automatic terminal installer.            v0.2|")
     print("  ===============================================")
     print("    (Almost every option will need configuring)")
     print("              Please select an option:")
