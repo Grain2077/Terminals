@@ -10,10 +10,10 @@ term.setCursorPos(3,18)
     shell.run("reboot")
 end
 local options = {
-    "[External Blastdoor Controller] v0.2           ",
-    "[Pip-Boy] v0.1                                 ",
-    "[External Vault Terminal] v0.1                 ",
-    "[Internal Vault Terminal] v0.1                 "
+    "[Blastdoor Server] v1.0 ",
+    "[Pip-Boy] v3.1          ",
+    "[Blastdoor Term] v0.0   ",
+    "[Basic Terminal] v0.0   "
 }
 
 local selected = 1
@@ -21,26 +21,27 @@ local selected = 1
 -- Function to draw the menu with highlight
 local function drawMenu()
     term.clear()
-    term.setCursorPos(1,2)
-    print("  Welcome to Vault-Tec (TM) VaultNet")
+    term.setCursorPos(1,1)
     print("")
-    print("  ==============Welcome to Vault-Tec=============")
-    print("  |Automatic terminal installer.            v0.3|")
-    print("  ===============================================")
-    print("    (Almost every option will need configuring)")
-    print("              Please select an option:")
+    print("===Welcome to Vault-Tec===")
+    print("| Automatic terminal     |")
+    print("| installer.       v0.3a |")
+    print("==========================")
+    print("    (Most options need    ")
+    print("       configuring)       ")
+    print(" Please select an option: ")
     print("")
     for i, option in ipairs(options) do
         if i == selected then
             -- Invert text for highlight
-            io.write("  ")
+            io.write(" ")
             term.setBackgroundColor(colors.white)
             term.setTextColor(colors.black)
             print(option)
             term.setBackgroundColor(colors.black)
             term.setTextColor(colors.white)
         else
-            print(" ",option)
+            print("",option)
         end
     end
 end
@@ -62,8 +63,6 @@ while true do
     term.setCursorPos(3,18)
         if selected == 1 then
         write("Installing ExtBlstCtrl...    ")
-            shell.run("wget https://raw.githubusercontent.com/Grain2077/Terminals/refs/heads/main/ExtBlstCtrl/startup")
-                DelInst()
         elseif selected == 2 then
         write("Installing Pip-OS...        ")
         elseif selected == 3 then
