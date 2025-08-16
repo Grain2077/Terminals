@@ -4,10 +4,10 @@ local APP_NAME = "pip-boy"
 -- Files to install (relative to repo root)
 local FILES = {
     "pip-boy/startup.lua",
-    "pip-boy/Stat.lua",
-    "pip-boy/Item.lua",
-    "pip-boy/Data.lua",
-    "pip-boy/DataFol/VaultDoor.lua"
+    "pip-boy/stat.lua",
+    "pip-boy/item.lua",
+    "pip-boy/data.lua",
+    "pip-boy/dataFol/vaultDoor.lua"
 }
 
 -- Ask user for confirmation
@@ -65,9 +65,9 @@ for _, file in ipairs(FILES) do
 
         if fs.exists(dest_path) then fs.delete(dest_path) end
         fs.copy(cache_path, dest_path)
-        print("✔ Installed " .. dest_path)
+        print("Installed " .. dest_path)
     else
-        print("✘ Failed to download " .. file)
+        print("Failed to download " .. file)
     end
 end
 
