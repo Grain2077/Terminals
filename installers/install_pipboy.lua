@@ -10,7 +10,16 @@ local FILES = {
     "pip-boy/DataFol/VaultDoor.lua"
 }
 
--- Helper: download a file with retries
+-- Ask user for confirmation
+print("Warning: This will overwrite any existing Pip-Boy files, including /startup.lua!")
+write("Do you want to continue? (y/n): ")
+local choice = read()
+if choice:lower() ~= "y" then
+    print("Installation cancelled.")
+    return
+end
+
+-- Helper: download file with retries
 local function http_get_file(url, save_path)
     local max_retries = 3
     for attempt = 1, max_retries do
@@ -19,11 +28,9 @@ local function http_get_file(url, save_path)
             local content = resp.readAll()
             resp.close()
 
-            -- ensure directory exists
             local dir = fs.getDir(save_path)
             if dir ~= "" and not fs.exists(dir) then fs.makeDir(dir) end
 
-            -- write file
             local f = fs.open(save_path, "w")
             if f then
                 f.write(content)
@@ -42,15 +49,20 @@ print("=== Installing " .. APP_NAME .. " ===")
 for _, file in ipairs(FILES) do
     local url = "https://raw.githubusercontent.com/Grain2077/Terminals/main/" .. file
     local cache_path = "/.install-cache/" .. APP_NAME .. "/" .. file
-    local dest_path = "/" .. file   -- installs directly into /pip-boy/...
 
-    -- download into cache
+    -- Decide where the file should be installed
+    local dest_path
+    if file == "pip-boy/startup.lua" then
+        dest_path = "/startup.lua"         -- root!
+    else
+        dest_path = "/" .. file            -- normal /pip-boy/...
+    end
+
+    -- Download into cache
     if http_get_file(url, cache_path) then
-        -- ensure final destination exists
         local dir = fs.getDir(dest_path)
         if dir ~= "" and not fs.exists(dir) then fs.makeDir(dir) end
 
-        -- copy file from cache to live filesystem
         if fs.exists(dest_path) then fs.delete(dest_path) end
         fs.copy(cache_path, dest_path)
         print("✔ Installed " .. dest_path)
