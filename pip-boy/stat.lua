@@ -159,12 +159,12 @@ parallel.waitForAny(dateLoop, keyLoop)
 
 --Menu Left program
 if optionLeft then
-    os.run({}, "Data")
+    os.run({}, "pip-boy/data")
 end
 
 --Menu Right program
 if optionRight then
-    os.run({}, "Item")
+    os.run({}, "pip-boy/item")
 end
 
 --Option 1 program
