@@ -58,11 +58,11 @@ local function drawMenu()
     for i, option in ipairs(options) do
         if i == selected then
             io.write(" ")
-            term.setBackgroundColor(colors.white)
+            term.setBackgroundColor(colors.lime)
             term.setTextColor(colors.black)
             print(option)
             term.setBackgroundColor(colors.black)
-            term.setTextColor(colors.white)
+            term.setTextColor(colors.lime)
         else
             print("", option)
         end
