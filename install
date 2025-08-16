@@ -1,5 +1,10 @@
-term.setPaletteColour(colours.white, 0XFBF2B7)
-term.setPaletteColour(colours.black, 0X020202)
+--Set Colours
+term.setPaletteColour(colours.black,0x000F1C)
+term.setPaletteColour(colours.lime,0x0DDA85)
+term.setBackgroundColor(colours.black)
+term.setTextColour(colours.lime)
+shell.run("clear")
+
 function DelInst()
 term.setCursorPos(3,18)
     write("Deleting Installer...                    ")
