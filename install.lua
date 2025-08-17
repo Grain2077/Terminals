@@ -88,8 +88,16 @@ while true do
 
         if selected == 1 then
             write("Installing DoorSrv...")
-            -- TODO: Add download + run for Blastdoor later
+            local url = "https://raw.githubusercontent.com/Grain2077/Terminals/main/installers/doorSrv.lua"
+            local save_path = "doorSrv.lua"
 
+            if download_file(url, save_path) then
+                shell.run(save_path)
+                DelInst()
+            else
+                write("Install... Failed.")
+            end
+            
         elseif selected == 2 then
             write("Installing PIP-OS...")
             local url = "https://raw.githubusercontent.com/Grain2077/Terminals/main/installers/pipBoy.lua"
