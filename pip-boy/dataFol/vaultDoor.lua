@@ -55,4 +55,4 @@ print("for further instructions.")
 os.sleep(2)
 end
 os.sleep(1)
-os.run({}, "pip-boy/data")
+os.run({}, "pip-boy/data.lua")
