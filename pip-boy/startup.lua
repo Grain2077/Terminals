@@ -21,7 +21,7 @@ if fs.exists("user.txt") then
  username = f.readAll()
  f.close()
 else
-  textutils.slowPrint("^^^^PIP-OS(R) V7.1.0.0^^^^")
+  textutils.slowPrint("^^^^PIP-OS(R) V3.1.0.0^^^^")
   textutils.slowWrite("Enter User: ")
  username = read()  -- user types their username
  
