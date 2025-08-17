@@ -19,6 +19,7 @@ write("Do you want to continue? (y/n): ")
 local choice = read()
 if choice:lower() ~= "y" then
     print("Installation cancelled.")
+    os.sleep(2)
     os.reboot()
     return
 end
