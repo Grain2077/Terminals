@@ -72,3 +72,4 @@ for _, file in ipairs(FILES) do
 end
 
 print("=== Installation complete for " .. APP_NAME .. " ===")
+DelInst()
