@@ -97,6 +97,6 @@ while true do
    else
    rednet.send(id,"ERROR: UNABLE TO SEAL","35")
   end
-  shell.run("startup")
+  shell.run("startup.lua")
  end
 end
