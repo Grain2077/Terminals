@@ -50,7 +50,7 @@ local function drawMenu()
     print("")
     print("===Welcome to Vault-Tec===")
     print("| Automatic terminal     |")
-    print("| installer.       v0.4b |")
+    print("| installer.       v0.4c |")
     print("==========================")
     print("    (Most options need    ")
     print("       configuring)       ")
@@ -87,31 +87,28 @@ while true do
         term.setCursorPos(3, 18)
 
         if selected == 1 then
-            write("Running Blastdoor Server installer...\n")
+            write("Installing DoorSrv...")
             -- TODO: Add download + run for Blastdoor later
 
         elseif selected == 2 then
-            write("Fetching PIP-OS...")
+            write("Installing PIP-OS...")
             local url = "https://raw.githubusercontent.com/Grain2077/Terminals/main/installers/pipBoy.lua"
             local save_path = "pipBoy.lua"
 
             if download_file(url, save_path) then
-                write("Running Pip-Boy installer...")
                 shell.run(save_path)
+                DelInst()
             else
-                write("Failed to download Pip-Boy installer!")
+                write("Install... Failed.")
             end
 
         elseif selected == 3 then
-            write("Running Blastdoor Terminal installer...\n")
+            write("Installing DoorTerm...")
             -- TODO: Add download + run for Blastdoor Term later
 
         elseif selected == 4 then
-            write("Running Basic Terminal installer...\n")
+            write("Installing BasicTerm...")
             -- TODO: Add download + run for Basic Terminal later
-        end
-
-    elseif key == keys.q then
-        break
+        ena
     end
 end
