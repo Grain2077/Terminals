@@ -18,6 +18,7 @@ print("overwrite any existing files.")
 write("Do you want to continue? (y/n): ")
 local choice = read()
 if choice:lower() ~= "y" then
+    term.setCursorPos(3, 18)
     print("Installation cancelled.")
     os.sleep(2)
     os.reboot()
@@ -49,6 +50,7 @@ local function http_get_file(url, save_path)
 end
 
 -- Install workflow
+term.setCursorPos(1,1)
 print("=== Installing " .. APP_NAME .. " ===")
 
 for _, file in ipairs(FILES) do
