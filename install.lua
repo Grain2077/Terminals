@@ -109,6 +109,6 @@ while true do
         elseif selected == 4 then
             write("Installing BasicTerm...")
             -- TODO: Add download + run for Basic Terminal later
-        ena
+        end
     end
 end
