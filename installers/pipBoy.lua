@@ -77,5 +77,5 @@ for _, file in ipairs(FILES) do
         print("Failed to download " .. file)
     end
 end
-hell.run("delete pipBoy.lua")
+shell.run("delete pipBoy.lua")
 print("=== Installation complete for " .. APP_NAME .. " ===")
