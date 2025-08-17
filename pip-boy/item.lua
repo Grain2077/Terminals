@@ -164,7 +164,7 @@ end
 
 --Menu Right program
 if optionRight then
-    os.run({}, "pip-boy/data/lua")
+    os.run({}, "pip-boy/data.lua")
 end
 
 --Option 1 program
