@@ -11,8 +11,9 @@ local FILES = {
 }
 
 -- Ask user for confirmation
-os.clear()
-print("Warning: This will overwrite any existing Pip-Boy files, including /startup.lua!")
+term.clear()
+print("WARNING: This will")
+print("overwrite any existing files.")
 write("Do you want to continue? (y/n): ")
 local choice = read()
 if choice:lower() ~= "y" then
@@ -73,4 +74,3 @@ for _, file in ipairs(FILES) do
 end
 
 print("=== Installation complete for " .. APP_NAME .. " ===")
-DelInst()
