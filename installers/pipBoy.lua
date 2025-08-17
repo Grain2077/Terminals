@@ -11,6 +11,7 @@ local FILES = {
 }
 
 -- Ask user for confirmation
+os.clear()
 print("Warning: This will overwrite any existing Pip-Boy files, including /startup.lua!")
 write("Do you want to continue? (y/n): ")
 local choice = read()
