@@ -1,4 +1,4 @@
--- Pip-Boy Installer for CC:Tweaked
+-- Pip-Boy v3.1
 local APP_NAME = "pip-boy"
 
 -- Files to install (relative to repo root)
