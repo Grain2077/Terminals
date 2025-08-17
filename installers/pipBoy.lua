@@ -12,6 +12,7 @@ local FILES = {
 
 -- Ask user for confirmation
 term.clear()
+term.setCursorPos(1,1)
 print("WARNING: This will")
 print("overwrite any existing files.")
 write("Do you want to continue? (y/n): ")
