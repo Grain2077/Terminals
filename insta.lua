@@ -10,16 +10,16 @@ function DelInst()
     write("Deleting Installer... ")
     sleep(0.5)
     shell.run("delete install.lua")
-    write("Rebooting...\n")
+    write("Rebooting...")
     sleep(0.5)
     shell.run("reboot")
 end
 
 local options = {
     "[Blastdoor Server] v1.0 ",
-    "[Pip-Boy] v3.1 ",
-    "[Blastdoor Term] v0.0 ",
-    "[Basic Terminal] v0.0 "
+    "[Pip-Boy] v3.1          ",
+    "[Blastdoor Term] v0.0   ",
+    "[Basic Terminal] v0.0   "
 }
 local selected = 1
 
@@ -52,8 +52,9 @@ local function drawMenu()
     print("| Automatic terminal     |")
     print("| installer.       v0.4a |")
     print("==========================")
-    print("(Most options need configuring)")
-    print(" Please select an option:")
+    print("    (Most options need    ")
+    print("       configuring)       ")
+    print(" Please select an option: ")
     print("")
     for i, option in ipairs(options) do
         if i == selected then
@@ -90,15 +91,15 @@ while true do
             -- TODO: Add download + run for Blastdoor later
 
         elseif selected == 2 then
-            write("Fetching Pip-Boy installer...\n")
-            local url = "https://raw.githubusercontent.com/Grain2077/Terminals/main/installers/install_pipboy.lua"
-            local save_path = "install_pipboy.lua"
+            write("Fetching PIP-OS...")
+            local url = "https://raw.githubusercontent.com/Grain2077/Terminals/main/installers/pipBoy.lua"
+            local save_path = "pipBoy.lua"
 
             if download_file(url, save_path) then
-                write("Running Pip-Boy installer...\n")
+                write("Running Pip-Boy installer...")
                 shell.run(save_path)
             else
-                write("Failed to download Pip-Boy installer!\n")
+                write("Failed to download Pip-Boy installer!")
             end
 
         elseif selected == 3 then
