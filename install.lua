@@ -17,7 +17,7 @@ end
 
 local options = {
     "[Blastdoor Server] v1.0 ",
-    "[Pip-Boy] v3.1          ",
+    "[Pip-Boy] v3.2          ",
     "[Blastdoor Term] v0.0   ",
     "[Basic Terminal] v0.0   "
 }
