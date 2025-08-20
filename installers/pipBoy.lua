@@ -5,7 +5,7 @@ local APP_NAME = "pip-boy"
 local FILES = {
     "pip-boy/startup.lua",
     "pip-boy/stat.lua",
-    "pip-boy/item.lua",
+    "pip-boy/maps.lua",
     "pip-boy/data.lua",
     "pip-boy/dataFol/vaultDoor.lua"
 }
