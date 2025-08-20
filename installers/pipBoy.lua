@@ -1,4 +1,4 @@
--- Pip-Boy v3.1
+-- Pip-Boy v3.2
 local APP_NAME = "pip-boy"
 
 -- Files to install (relative to repo root)
