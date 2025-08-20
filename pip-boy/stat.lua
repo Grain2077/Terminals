@@ -63,7 +63,7 @@ local selected = 1
 local function drawMenu()
     term.clear()
     term.setCursorPos(1,1)
-    print("A>  [STAT] ITEM  DATA   <D")
+    print("A>  [STAT] DATA  MAPS   <D")
 
 --Underline
 write(string.char(175))
@@ -159,12 +159,12 @@ parallel.waitForAny(dateLoop, keyLoop)
 
 --Menu Left program
 if optionLeft then
-    os.run({}, "pip-boy/data.lua")
+    os.run({}, "pip-boy/maps.lua")
 end
 
 --Menu Right program
 if optionRight then
-    os.run({}, "pip-boy/item.lua")
+    os.run({}, "pip-boy/data.lua")
 end
 
 --Option 1 program
