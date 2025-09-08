@@ -132,19 +132,13 @@ while true do
 --Option 1
         if selected == 1 then
         runDateLoop = false
-        write("Accessing...")
+        write("Rebooting...")
         option1 = true
 --Option 2
         elseif selected == 2 then
 		runDateLoop = false
-        write("Rebooting...")
+        write("Shutting Down...")
         option2 = true
---Option 3
-        elseif selected == 3 then
-		runDateLoop = false
-		write("Shutting Down...")
-        option2 = true
-        end
 --Menu keys
     elseif key == keys.a then
         runDateLoop = false
