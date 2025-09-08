@@ -1,9 +1,11 @@
--- Blastdoor Server v1.0
+-- Blastdoor Server v1.2
 local APP_NAME = "DoorSvr"
 
 -- Files to install (relative to repo root)
 local FILES = {
     "doorSrv/startup.lua"
+    "doorSrv/door.dfpwm"
+    "doorSrv/screech.dfpwm"
 }
 
 -- Ask user for confirmation
