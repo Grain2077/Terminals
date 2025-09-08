@@ -169,10 +169,12 @@ end
 
 --Option 1 program
 if option1 then
+	os.sleep(0.3)
     os.reboot()
 end
 
 --Option 2 program
 if option2 then
+	os.sleep(0.3)
     os.shutdown()
 end
