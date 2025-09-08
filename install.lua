@@ -16,7 +16,7 @@ function DelInst()
 end
 
 local options = {
-    "[Blastdoor Server] v1.0 ",
+    "[Blastdoor Server] v1.2 ",
     "[Pip-Boy] v3.2          ",
     "[Blastdoor Term] v0.0   ",
     "[Basic Terminal] v0.0   "
@@ -50,7 +50,7 @@ local function drawMenu()
     print("")
     print("===Welcome to Vault-Tec===")
     print("| Automatic terminal     |")
-    print("| installer.       v0.5a |")
+    print("| installer.       v0.5b |")
     print("==========================")
     print("    (Most options need    ")
     print("       configuring)       ")
