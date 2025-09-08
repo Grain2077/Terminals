@@ -163,16 +163,19 @@ end
 
 --Option 1 program
 if option1 then
+	os.sleep(0.3)
     os.run({}, "pip-boy/dataFol/vaultDoor.lua")
 end
 
 --Option 2 program
 if option2 then
+	os.sleep(0.3)
     fs.delete("user.txt")
     os.reboot()
 end
 
 --Option 3 program
 if option3 then
+	os.sleep(0.3)
    os.reboot()
 end
