@@ -2,97 +2,68 @@ local mon = peripheral.find("monitor")
 if not mon then error("No monitor found") end
 mon.setTextScale(0.5)
 
--- ======================================================================
--- Button system
--- ======================================================================
-local Buttons = {}
+-- Colors
+local normalColor = colors.lime
+local activeColor = colors.orange
 
-local function addButton(name, x1, y1, x2, y2, callback)
-    Buttons[#Buttons+1] = {
-        name=name,
-        x1=x1, y1=y1, x2=x2, y2=y2,
-        callback=callback
-    }
-end
+-- ============================================================
+-- MENU STATE
+-- ============================================================
+local currentMenu = "GAUGES"
 
-local function drawButton(b)
-    mon.setBackgroundColor(colors.orange)
-    for y=b.y1, b.y2 do
-        mon.setCursorPos(b.x1, y)
-        mon.write(string.rep(" ", b.x2 - b.x1 + 1))
-    end
+-- ============================================================
+-- BUTTON COORDINATES
+-- ============================================================
+local Buttons = {
+    CLIMATE = {x1=5,  y1=3,  x2=10, y2=4},
+    SUMMARY = {x1=17, y1=3,  x2=22, y2=4},
+    RADIO   = {x1=29, y1=3,  x2=34, y2=4},
 
-    mon.setTextColor(colors.black)
-    mon.setCursorPos(b.x1 + 1, math.floor((b.y1 + b.y2) / 2))
-    mon.write(b.name)
-end
+    GAUGES  = {x1=5,  y1=22, x2=10, y2=23},
+    OPTIONS = {x1=17, y1=22, x2=22, y2=23},
+    STATUS  = {x1=29, y1=22, x2=34, y2=23},
+}
 
-local function drawButtons()
-    for _,b in ipairs(Buttons) do
-        drawButton(b)
-    end
-end
-
-local function handleTouch(x,y)
-    for _,b in ipairs(Buttons) do
-        if x>=b.x1 and x<=b.x2 and y>=b.y1 and y<=b.y2 then
-            b.callback()
-            return
-        end
-    end
-end
-
--- ======================================================================
--- Common Button Bar (on all screens)
--- ======================================================================
-local function installButtonBar(handlers)
-    Buttons = {}
-
-    -- Top row
-    addButton("CLIMATE",  5, 2, 14, 4, handlers.climate)
-    addButton("SUMMARY", 17, 2, 26, 4, handlers.summary)
-    addButton("RADIO",   29, 2, 37, 4, handlers.radio)
-
-    -- Bottom row
-    addButton("GAUGES",  5, 21, 14, 23, handlers.gauges)
-    addButton("OPTIONS", 17, 21, 26, 23, handlers.options)
-    addButton("STATUS",  29, 21, 37, 23, handlers.status)
-end
-
--- ======================================================================
--- Menu pages
--- ======================================================================
+-- ============================================================
+-- DRAW HELPERS
+-- ============================================================
 local function drawBase()
     mon.setBackgroundColor(colors.black)
-    mon.setTextColor(colors.lime)
+    mon.setTextColor(normalColor)
     mon.clear()
 end
 
-local function page_CLIMATE()
-    drawBase()
-    mon.setCursorPos(2,6)
-    mon.write("CLIMATE CONTROL MENU")
-    drawButtons()
+-- ============================================================
+-- DRAW BUTTON BOXES + LABELS
+-- Turns the ASCII box orange when active
+-- ============================================================
+local function drawMenuLabels()
+    for name, pos in pairs(Buttons) do
+        local boxColor = (currentMenu == name) and activeColor or normalColor
+
+        -- Draw top line of box
+        mon.setTextColor(boxColor)
+        mon.setCursorPos(pos.x1, pos.y1)
+        mon.write("+----+")
+
+        -- Draw bottom line of box
+        mon.setCursorPos(pos.x1, pos.y2)
+        mon.write("+----+")
+
+        -- Draw label (always lime)
+        mon.setTextColor(normalColor)
+        mon.setCursorPos(pos.x1, pos.y2 + 1)
+        mon.write(name)
+    end
 end
 
-local function page_SUMMARY()
-    drawBase()
-    mon.setCursorPos(2,6)
-    mon.write("SUMMARY INFORMATION PAGE")
-    drawButtons()
-end
-
-local function page_RADIO()
-    drawBase()
-    mon.setCursorPos(2,6)
-    mon.write("RADIO CONTROL INTERFACE")
-    drawButtons()
-end
-
+-- ============================================================
+-- MENU PAGES
+-- ============================================================
 local function page_GAUGES()
     drawBase()
 
-    -- Insert your ASCII dashboard here
+    -- GAUGES ASCII dashboard (your original art)
     local lines = {
 "                                    ",
 "    CLIMATE    SUMMARY    RADIO     ",
@@ -116,53 +87,53 @@ local function page_GAUGES()
 "                                    ",
 "    +----+     +----+     +----+    ",
 "    +----+     +----+     +----+    ",
-"    GAUGES     OPTIONS    STATUS    "
+"                                    ",
     }
     for i,line in ipairs(lines) do
         mon.setCursorPos(1,i)
         mon.write(line)
     end
 
-    drawButtons()
+    drawMenuLabels()
 end
 
-local function page_OPTIONS()
+local function page_TEXT(title)
     drawBase()
-    mon.setCursorPos(2,6)
-    mon.write("OPTIONS / SETTINGS MENU")
-    drawButtons()
+    mon.setCursorPos(3,8)
+    mon.write(title)
+    drawMenuLabels()
 end
 
-local function page_STATUS()
-    drawBase()
-    mon.setCursorPos(2,6)
-    mon.write("SYSTEM STATUS PAGE")
-    drawButtons()
-end
-
--- ======================================================================
--- Button handler map
--- ======================================================================
-local handlers = {
-    climate = page_CLIMATE,
-    summary = page_SUMMARY,
-    radio   = page_RADIO,
-    gauges  = page_GAUGES,
-    options = page_OPTIONS,
-    status  = page_STATUS,
+local Pages = {
+    CLIMATE = function() page_TEXT("CLIMATE MENU") end,
+    SUMMARY = function() page_TEXT("SUMMARY PAGE") end,
+    RADIO   = function() page_TEXT("RADIO PAGE") end,
+    OPTIONS = function() page_TEXT("OPTIONS PAGE") end,
+    STATUS  = function() page_TEXT("STATUS PAGE") end,
+    GAUGES  = page_GAUGES,
 }
 
--- Create button bar once
-installButtonBar(handlers)
+-- ============================================================
+-- TOUCH HANDLING
+-- ============================================================
+local function handleTouch(x,y)
+    for name, pos in pairs(Buttons) do
+        if x >= pos.x1 and x <= pos.x2 and y >= pos.y1 and y <= pos.y2 then
+            currentMenu = name
+            Pages[name]()
+            return
+        end
+    end
+end
 
--- ======================================================================
--- Start in GAUGES menu
--- ======================================================================
-page_GAUGES()
+-- ============================================================
+-- STARTUP
+-- ============================================================
+Pages.GAUGES()
 
--- ======================================================================
--- Event loop
--- ======================================================================
+-- ============================================================
+-- MAIN LOOP
+-- ============================================================
 while true do
     local ev, side, x, y = os.pullEvent("monitor_touch")
     handleTouch(x, y)
