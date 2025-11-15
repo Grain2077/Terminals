@@ -85,15 +85,6 @@ local function page_GAUGES()
     end
 
     drawMenuLabels()
-
-    -- Draw initial values
-    mon.setTextColor(colors.lime)
-    mon.setCursorPos(20,14)
-    mon.write(string.format("%3d%%  ", Fuel))
-    mon.setCursorPos(30,14)
-    mon.write(string.format("%3d km  ", Trip))
-    mon.setCursorPos(20,17)
-    mon.write(string.format("%4d  ", RPM))
 end
 
 -- Other pages
@@ -124,11 +115,10 @@ local function handleTouch(x,y)
     end
 end
 
--- Update dashboard (manual input)
+-- Update dashboard
 local function updateDashboard()
     if currentMenu ~= "GAUGES" then return end
 
-    -- Just rewrite the values at their positions
     mon.setTextColor(colors.lime)
     mon.setCursorPos(20,14)
     mon.write(string.format("%3d%%  ", Fuel))
@@ -143,14 +133,13 @@ Pages.GAUGES()
 
 -- Main loop
 while true do
-    local eventData = {os.pullEventRaw()}
-    local ev = eventData[1]
+    -- Non-blocking update: pull any event
+    local ev, side, x, y = os.pullEvent("monitor_touch")
 
     if ev == "monitor_touch" then
-        local _, side, x, y = table.unpack(eventData, 2)
         handleTouch(x,y)
     end
 
-    -- Update gauges
+    -- Always update gauges if GAUGES is active
     updateDashboard()
 end
