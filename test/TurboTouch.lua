@@ -2,68 +2,56 @@ local mon = peripheral.find("monitor")
 if not mon then error("No monitor found") end
 mon.setTextScale(0.5)
 
--- Colors
 local normalColor = colors.lime
 local activeColor = colors.orange
 
--- ============================================================
--- MENU STATE
--- ============================================================
 local currentMenu = "GAUGES"
 
--- ============================================================
--- BUTTON COORDINATES
--- ============================================================
-local Buttons = {
-    CLIMATE = {x1=5,  y1=3,  x2=10, y2=4},
-    SUMMARY = {x1=17, y1=3,  x2=22, y2=4},
-    RADIO   = {x1=29, y1=3,  x2=34, y2=4},
+-- Find the TARDIS interface if available
+local tardis = peripheral.find("tardisinterface")
 
-    GAUGES  = {x1=5,  y1=22, x2=10, y2=23},
-    OPTIONS = {x1=17, y1=22, x2=22, y2=23},
-    STATUS  = {x1=29, y1=22, x2=34, y2=23},
+-- Button coordinates
+local Buttons = {
+    CLIMATE = {x1=5,  y1=3,  x2=10, y2=4, labelPos="top"},
+    SUMMARY = {x1=17, y1=3,  x2=22, y2=4, labelPos="top"},
+    RADIO   = {x1=29, y1=3,  x2=34, y2=4, labelPos="top"},
+    GAUGES  = {x1=5,  y1=22, x2=10, y2=23, labelPos="bottom"},
+    OPTIONS = {x1=17, y1=22, x2=22, y2=23, labelPos="bottom"},
+    STATUS  = {x1=29, y1=22, x2=34, y2=23, labelPos="bottom"},
 }
 
--- ============================================================
--- DRAW HELPERS
--- ============================================================
+-- Draw base
 local function drawBase()
     mon.setBackgroundColor(colors.black)
     mon.setTextColor(normalColor)
     mon.clear()
 end
 
--- ============================================================
--- DRAW BUTTON BOXES + LABELS
--- Turns the ASCII box orange when active
--- ============================================================
+-- Draw buttons
 local function drawMenuLabels()
     for name, pos in pairs(Buttons) do
         local boxColor = (currentMenu == name) and activeColor or normalColor
 
-        -- Draw top line of box
+        -- Draw box
         mon.setTextColor(boxColor)
         mon.setCursorPos(pos.x1, pos.y1)
         mon.write("+----+")
-
-        -- Draw bottom line of box
         mon.setCursorPos(pos.x1, pos.y2)
         mon.write("+----+")
 
-        -- Draw label (always lime)
+        -- Draw label
         mon.setTextColor(normalColor)
-        mon.setCursorPos(pos.x1, pos.y2 + 1)
+        local labelY = (pos.labelPos == "top") and (pos.y1 - 1) or (pos.y2 + 1)
+        mon.setCursorPos(pos.x1, labelY)
         mon.write(name)
     end
 end
 
--- ============================================================
--- MENU PAGES
--- ============================================================
+-- GAUGES page
 local function page_GAUGES()
     drawBase()
 
-    -- GAUGES ASCII dashboard (your original art)
+    -- ASCII dashboard
     local lines = {
 "                                    ",
 "    CLIMATE    SUMMARY    RADIO     ",
@@ -95,8 +83,18 @@ local function page_GAUGES()
     end
 
     drawMenuLabels()
+
+    -- Draw placeholders for values
+    mon.setTextColor(colors.lime)
+    mon.setCursorPos(20,14) -- Fuel
+    mon.write("   %")
+    mon.setCursorPos(30,14) -- Trip
+    mon.write("   km")
+    mon.setCursorPos(20,17) -- RPM
+    mon.write("    ")
 end
 
+-- Other pages
 local function page_TEXT(title)
     drawBase()
     mon.setCursorPos(3,8)
@@ -113,9 +111,7 @@ local Pages = {
     GAUGES  = page_GAUGES,
 }
 
--- ============================================================
--- TOUCH HANDLING
--- ============================================================
+-- Touch handling
 local function handleTouch(x,y)
     for name, pos in pairs(Buttons) do
         if x >= pos.x1 and x <= pos.x2 and y >= pos.y1 and y <= pos.y2 then
@@ -126,15 +122,37 @@ local function handleTouch(x,y)
     end
 end
 
--- ============================================================
--- STARTUP
--- ============================================================
+-- Update dashboard from TARDIS data
+local function updateDashboard()
+    if currentMenu ~= "GAUGES" then return end
+    if not tardis then return end
+
+    local RPM = tardis.getSpeedLevel() or 0
+    local Fuel = tardis.getFuelLevel() or 0
+    local Trip = tardis.getTrip() or 0
+
+    -- Draw updated values
+    mon.setTextColor(colors.lime)
+    mon.setCursorPos(20,14)
+    mon.write(string.format("%3d%%  ", Fuel))
+    mon.setCursorPos(30,14)
+    mon.write(string.format("%3d km  ", Trip))
+    mon.setCursorPos(20,17)
+    mon.write(string.format("%4d  ", RPM))
+end
+
+-- Startup
 Pages.GAUGES()
 
--- ============================================================
--- MAIN LOOP
--- ============================================================
+-- Main loop
 while true do
-    local ev, side, x, y = os.pullEvent("monitor_touch")
-    handleTouch(x, y)
+    local eventData = {os.pullEventRaw()}
+    local ev = eventData[1]
+
+    if ev == "monitor_touch" then
+        local _, side, x, y = table.unpack(eventData, 2)
+        handleTouch(x,y)
+    end
+
+    updateDashboard()
 end
