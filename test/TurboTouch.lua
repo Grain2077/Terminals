@@ -7,9 +7,6 @@ local activeColor = colors.orange
 
 local currentMenu = "GAUGES"
 
--- Find the TARDIS interface if available
-local tardis = peripheral.find("tardisinterface")
-
 -- Button coordinates
 local Buttons = {
     CLIMATE = {x1=5,  y1=3,  x2=10, y2=4, labelPos="top"},
@@ -19,6 +16,11 @@ local Buttons = {
     OPTIONS = {x1=17, y1=22, x2=22, y2=23, labelPos="bottom"},
     STATUS  = {x1=29, y1=22, x2=34, y2=23, labelPos="bottom"},
 }
+
+-- Dashboard variables (manual input)
+local RPM = 0
+local Fuel = 100
+local Trip = 0
 
 -- Draw base
 local function drawBase()
@@ -84,14 +86,14 @@ local function page_GAUGES()
 
     drawMenuLabels()
 
-    -- Draw placeholders for values
+    -- Draw initial values
     mon.setTextColor(colors.lime)
-    mon.setCursorPos(20,14) -- Fuel
-    mon.write("   %")
-    mon.setCursorPos(30,14) -- Trip
-    mon.write("   km")
-    mon.setCursorPos(20,17) -- RPM
-    mon.write("    ")
+    mon.setCursorPos(20,14)
+    mon.write(string.format("%3d%%  ", Fuel))
+    mon.setCursorPos(30,14)
+    mon.write(string.format("%3d km  ", Trip))
+    mon.setCursorPos(20,17)
+    mon.write(string.format("%4d  ", RPM))
 end
 
 -- Other pages
@@ -122,16 +124,11 @@ local function handleTouch(x,y)
     end
 end
 
--- Update dashboard from TARDIS data
+-- Update dashboard (manual input)
 local function updateDashboard()
     if currentMenu ~= "GAUGES" then return end
-    if not tardis then return end
 
-    local RPM = tardis.getSpeedLevel() or 0
-    local Fuel = tardis.getFuelLevel() or 0
-    local Trip = tardis.getTrip() or 0
-
-    -- Draw updated values
+    -- Just rewrite the values at their positions
     mon.setTextColor(colors.lime)
     mon.setCursorPos(20,14)
     mon.write(string.format("%3d%%  ", Fuel))
@@ -141,7 +138,7 @@ local function updateDashboard()
     mon.write(string.format("%4d  ", RPM))
 end
 
--- Startup
+-- Start with GAUGES
 Pages.GAUGES()
 
 -- Main loop
@@ -154,5 +151,6 @@ while true do
         handleTouch(x,y)
     end
 
+    -- Update gauges
     updateDashboard()
 end
