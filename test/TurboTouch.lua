@@ -19,7 +19,7 @@ local Buttons = {
 
 -- Dashboard variables (manual input)
 local RPM = 0
-local Fuel = 100
+local Fuel = 110
 local Trip = 0
 
 -- Draw base
