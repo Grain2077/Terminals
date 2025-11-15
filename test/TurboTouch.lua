@@ -7,6 +7,9 @@ local activeColor = colors.orange
 
 local currentMenu = "GAUGES"
 
+-- Redstone input side
+local RS_SIDE = "top"  -- Change this if your redstone is on another side
+
 -- Button coordinates
 local Buttons = {
     CLIMATE = {x1=5,  y1=3,  x2=10, y2=4, labelPos="top"},
@@ -19,7 +22,7 @@ local Buttons = {
 
 -- Dashboard variables (manual input)
 local RPM = 0
-local Fuel = 110
+local Fuel = 100
 local Trip = 0
 
 -- Draw base
@@ -34,14 +37,12 @@ local function drawMenuLabels()
     for name, pos in pairs(Buttons) do
         local boxColor = (currentMenu == name) and activeColor or normalColor
 
-        -- Draw box
         mon.setTextColor(boxColor)
         mon.setCursorPos(pos.x1, pos.y1)
         mon.write("+----+")
         mon.setCursorPos(pos.x1, pos.y2)
         mon.write("+----+")
 
-        -- Draw label
         mon.setTextColor(normalColor)
         local labelY = (pos.labelPos == "top") and (pos.y1 - 1) or (pos.y2 + 1)
         mon.setCursorPos(pos.x1, labelY)
@@ -53,7 +54,6 @@ end
 local function page_GAUGES()
     drawBase()
 
-    -- ASCII dashboard
     local lines = {
 "                                    ",
 "    CLIMATE    SUMMARY    RADIO     ",
@@ -128,18 +128,32 @@ local function updateDashboard()
     mon.write(string.format("%4d  ", RPM))
 end
 
+-- Track last redstone state to detect rising edge
+local lastRS = false
+
 -- Start with GAUGES
 Pages.GAUGES()
 
 -- Main loop
 while true do
-    -- Non-blocking update: pull any event
-    local ev, side, x, y = os.pullEvent("monitor_touch")
+    -- Check redstone input
+    local rs = redstone.getInput(RS_SIDE)
+    if rs and not lastRS then
+        -- Toggle fuel between 100 and 50
+        if Fuel == 100 then
+            Fuel = 50
+        else
+            Fuel = 100
+        end
+    end
+    lastRS = rs
 
-    if ev == "monitor_touch" then
+    -- Handle monitor touches
+    local event, side, x, y = os.pullEvent("monitor_touch")
+    if event == "monitor_touch" then
         handleTouch(x,y)
     end
 
-    -- Always update gauges if GAUGES is active
+    -- Update dashboard if on GAUGES
     updateDashboard()
 end
